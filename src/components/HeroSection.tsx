@@ -63,9 +63,7 @@ export default function HeroSection() {
               transition={{ duration: 0.8, delay: 0.5 }}
               className="text-lg text-muted-foreground mb-8 max-w-xl"
             >
-             🔭 Setiap proyek kecil adalah bagian dari perjalanan saya memahami teknologi. A curious mind exploring the endless landscape of the web.
-              
-          
+              🔭 Setiap proyek kecil adalah bagian dari perjalanan saya memahami teknologi. A curious mind exploring the endless landscape of the web.
             </motion.p>
 
             {/* BUTTON */}
@@ -109,16 +107,14 @@ export default function HeroSection() {
               className="flex gap-5"
             >
               {[
-                { icon: Github, href: 'https://github.com/Hardilarle269/Ricarle-_git', label: 'GitHub' },
-                // { icon: Linkedin, href: "#", label: "LinkedIn" },
-                // { icon: Youtube, href: "#", label: "YouTube" },
-                { icon: Instagram, href: 'https://www.instagram.com/rca_hrdl/', label: 'Instagram' },
+                { icon: Github, href: "#", label: "GitHub" },
+                { icon: Linkedin, href: "#", label: "LinkedIn" },
+                { icon: Youtube, href: "#", label: "YouTube" },
+                { icon: Instagram, href: "#", label: "Instagram" },
               ].map((social) => (
                 <motion.a
                   key={social.label}
                   href={social.href}
-                  target="_blank"
-                   rel="noopener noreferrer"
                   className="p-3 rounded-full glass hover:shadow-glow transition"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
