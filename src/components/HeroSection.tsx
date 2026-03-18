@@ -57,13 +57,14 @@ export default function HeroSection() {
     const animate = () => {
       const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
 
+      // 🔥 FIX WARNA BIAR NYAMBUNG KE BAWAH
       if (isDark) {
         gradient.addColorStop(0, '#020617');
         gradient.addColorStop(1, '#020617');
       } else {
-        gradient.addColorStop(0, '#a18cd1');
-        gradient.addColorStop(0.5, '#c2b5f5');
-        gradient.addColorStop(1, '#e0e7ff');
+        gradient.addColorStop(0, '#0f172a');   // gelap atas
+        gradient.addColorStop(0.5, '#1e293b'); // tengah
+        gradient.addColorStop(1, '#334155');   // bawah (nyatu)
       }
 
       ctx.fillStyle = gradient;
@@ -125,8 +126,11 @@ export default function HeroSection() {
 
       <canvas ref={canvasRef} className="absolute inset-0 -z-10" />
 
-      {/* overlay biar teks kebaca */}
-      <div className="absolute inset-0 bg-white/40 dark:bg-black/40 -z-10"></div>
+      {/* 🔥 overlay lebih halus */}
+      <div className="absolute inset-0 bg-white/10 dark:bg-black/50 -z-10"></div>
+
+      {/* 🔥 fade ke bawah biar nyatu */}
+      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-b from-transparent to-black/60 z-0"></div>
 
       {/* glow */}
       <div
@@ -162,7 +166,7 @@ export default function HeroSection() {
             <div className="relative group">
               <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 rounded-3xl blur-2xl opacity-70"></div>
 
-              <div className="relative bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-3xl p-2">
+              <div className="relative bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl p-2">
                 <img
                   src="/carle.jpg"
                   alt="Rica Hardila"
@@ -176,28 +180,27 @@ export default function HeroSection() {
           <div className="text-center md:text-left">
 
             <span className="inline-block px-4 py-2 rounded-full 
-            bg-white/80 dark:bg-white/10 
-            text-gray-800 dark:text-cyan-300 
-            text-sm mb-6 border border-gray-200 dark:border-white/10">
+            bg-white/10 
+            text-cyan-300 
+            text-sm mb-6 border border-white/10">
               ✨ Let's Explore My Work!
             </span>
 
             <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-              <span className="text-gray-900 dark:text-white">Access granted!</span><br />
+              <span className="text-white">Access granted!</span><br />
               <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
                 Rica Hardila
               </span>
             </h1>
 
-            <p className="text-gray-700 dark:text-white/80 mt-6 max-w-xl leading-relaxed">
+            <p className="text-white/80 mt-6 max-w-xl leading-relaxed">
               🔭 Setiap proyek kecil adalah bagian dari perjalanan saya memahami teknologi, 
-              <span className="text-cyan-500"> while exploring creativity in the digital world.</span>
+              <span className="text-cyan-400"> while exploring creativity in the digital world.</span>
             </p>
 
             {/* BUTTON */}
             <div className="flex gap-4 mt-8 justify-center md:justify-start">
 
-              {/* SCROLL */}
               <button
                 onClick={scrollToAbout}
                 onMouseMove={handleMagnet}
@@ -208,7 +211,7 @@ export default function HeroSection() {
                 🚀 Explore
               </button>
 
-              {/* LINK TAB BARU */}
+              {/* 🔥 target blank TETAP ADA */}
               <a
                 href="https://wa.me/your-number"
                 target="_blank"
@@ -216,9 +219,9 @@ export default function HeroSection() {
                 onMouseMove={handleMagnet}
                 onMouseLeave={resetMagnet}
                 className="px-8 py-3 rounded-full 
-                text-gray-800 dark:text-white 
-                bg-white/80 dark:bg-white/10 
-                border border-gray-200 dark:border-white/10 
+                text-white 
+                bg-white/10 
+                border border-white/10 
                 hover:scale-105 transition"
               >
                 ✉️ Contact
@@ -240,11 +243,11 @@ export default function HeroSection() {
                   onMouseMove={handleMagnet}
                   onMouseLeave={resetMagnet}
                   className="p-3 rounded-full 
-                  bg-white/80 dark:bg-white/10 
-                  border border-gray-200 dark:border-white/10 
+                  bg-white/10 
+                  border border-white/10 
                   hover:scale-110 transition"
                 >
-                  <item.icon className="text-gray-800 dark:text-white w-5 h-5" />
+                  <item.icon className="text-white w-5 h-5" />
                 </a>
               ))}
             </div>
@@ -256,11 +259,11 @@ export default function HeroSection() {
       <motion.button
         onClick={scrollToAbout}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 p-3 rounded-full 
-        bg-white/80 dark:bg-white/10 
-        border border-gray-200 dark:border-white/10"
+        bg-white/10 
+        border border-white/10"
         whileHover={{ scale: 1.2 }}
       >
-        <ArrowDown className="text-cyan-500" />
+        <ArrowDown className="text-cyan-400" />
       </motion.button>
     </section>
   );
