@@ -74,11 +74,11 @@ export default function CertificatesSection() {
           className="text-center mb-16"
         >
           <span className="text-cyan-400 font-medium mb-2 block">
-            Kredensial
+            Creds ✨
           </span>
 
           <h2 className="font-display text-3xl md:text-5xl font-bold mb-4 text-white">
-            Sertifikat &amp; Lisensi
+            Certs &amp; Achievements ⭐
           </h2>
 
           <div className="w-20 h-1 bg-cyan-400 mx-auto rounded-full" />
