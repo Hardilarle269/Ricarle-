@@ -1,31 +1,53 @@
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Youtube, Instagram, Heart } from 'lucide-react';
+import { Github, Instagram, Heart } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
     { icon: Github, href: 'https://github.com/Hardilarle269/Ricarle-.git', label: 'GitHub' },
-    // { icon: Linkedin, href: '#', label: 'LinkedIn' },
-    // { icon: Youtube, href: '#', label: 'YouTube' },
     { icon: Instagram, href: 'https://www.instagram.com/rca_hrdl/', label: 'Instagram' },
-];
+  ];
 
   return (
-    <footer className="py-8 border-t border-border bg-muted/30">
+    <footer
+      className="
+      py-8 
+      transition-all duration-300
+
+      /* ☀️ LIGHT MODE */
+      bg-gradient-to-r 
+      from-[#a18cd1]/90 via-[#fbc2eb]/90 to-[#8fd3f4]/90
+      border-t border-white/30
+
+      /* 🌙 DARK MODE */
+      dark:bg-gradient-to-r 
+      dark:from-[#020617] dark:via-[#1e1b4b] dark:to-[#4c1d95]
+      dark:border-purple-500/20
+      dark:shadow-[0_-4px_30px_rgba(124,58,237,0.3)]
+      "
+    >
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+
+          {/* TEXT */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="flex items-center gap-2 text-muted-foreground"
+            className="
+            flex items-center gap-2 text-sm
+
+            text-white/90
+            dark:text-white/70
+            "
           >
             <span>© {currentYear} Made with</span>
-            <Heart className="h-4 w-4 text-destructive fill-destructive" />
+            <Heart className="h-4 w-4 text-red-400 fill-red-400" />
             <span>by Rica Hardila</span>
           </motion.div>
 
+          {/* SOCIAL */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -38,8 +60,16 @@ export default function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
                 aria-label={social.label}
+                className="
+                p-2 rounded-full transition-all duration-300
+
+                /* LIGHT */
+                text-white hover:bg-white/20 hover:scale-110
+
+                /* DARK */
+                dark:text-white/70 dark:hover:text-purple-300 dark:hover:bg-purple-500/20
+                "
               >
                 <social.icon className="h-5 w-5" />
               </a>

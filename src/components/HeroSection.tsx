@@ -1,31 +1,151 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, Github, Instagram } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import ThreeScene from './ThreeScene';
 
 export default function HeroSection() {
+  const glowRef = useRef(null);
+  const canvasRef = useRef(null);
+  const [trail, setTrail] = useState([]);
+  const mouse = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const move = (e) => {
+      mouse.current.x = e.clientX;
+      mouse.current.y = e.clientY;
+
+      if (glowRef.current) {
+        glowRef.current.style.left = e.clientX + 'px';
+        glowRef.current.style.top = e.clientY + 'px';
+      }
+
+      setTrail((prev) => [
+        ...prev.slice(-15),
+        { x: e.clientX, y: e.clientY, id: Date.now() }
+      ]);
+    };
+
+    window.addEventListener('mousemove', move);
+    return () => window.removeEventListener('mousemove', move);
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+
+    let stars = [];
+    let animationId;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    resize();
+    window.addEventListener('resize', resize);
+
+    for (let i = 0; i < 200; i++) {
+      stars.push({
+        x: (Math.random() - 0.5) * canvas.width,
+        y: (Math.random() - 0.5) * canvas.height,
+        z: Math.random() * canvas.width
+      });
+    }
+
+    const isDark = document.documentElement.classList.contains('dark');
+
+    const animate = () => {
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+
+      if (isDark) {
+        gradient.addColorStop(0, '#020617');
+        gradient.addColorStop(1, '#020617');
+      } else {
+        gradient.addColorStop(0, '#a18cd1');
+        gradient.addColorStop(0.5, '#c2b5f5');
+        gradient.addColorStop(1, '#e0e7ff');
+      }
+
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const mx = (mouse.current.x - canvas.width / 2) * 0.0005;
+      const my = (mouse.current.y - canvas.height / 2) * 0.0005;
+
+      stars.forEach((star) => {
+        star.z -= 2;
+        if (star.z <= 0) star.z = canvas.width;
+
+        const k = 128 / star.z;
+        const x = star.x * k + canvas.width / 2 + mx * star.z * 2;
+        const y = star.y * k + canvas.height / 2 + my * star.z * 2;
+
+        const size = (1 - star.z / canvas.width) * 3;
+
+        ctx.beginPath();
+        ctx.fillStyle = isDark
+          ? 'rgba(255,255,255,0.9)'
+          : 'rgba(99,102,241,0.7)';
+
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(animationId);
+    };
+  }, []);
+
+  const handleMagnet = (e) => {
+    const el = e.currentTarget;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+
+    el.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+  };
+
+  const resetMagnet = (e) => {
+    e.currentTarget.style.transform = 'translate(0px, 0px)';
+  };
+
   const scrollToAbout = () => {
-    const element = document.querySelector('#about');
-    if (element) element.scrollIntoView({ behavior: 'smooth' });
+    const el = document.querySelector('#about');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-      {/* 🌌 GOD LEVEL BACKGROUND */}
-      <div className="absolute inset-0 -z-10">
+      <canvas ref={canvasRef} className="absolute inset-0 -z-10" />
 
-        {/* AURORA GRADIENT */}
-        <div className="absolute w-[700px] h-[700px] bg-cyan-500/20 blur-[140px] rounded-full animate-pulse top-[-150px] left-[-150px]" />
-        <div className="absolute w-[600px] h-[600px] bg-purple-500/20 blur-[140px] rounded-full animate-pulse bottom-[-150px] right-[-150px]" />
+      {/* overlay biar teks kebaca */}
+      <div className="absolute inset-0 bg-white/40 dark:bg-black/40 -z-10"></div>
 
-        {/* COLOR OVERLAY */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-slate-900 to-black opacity-90" />
+      {/* glow */}
+      <div
+        ref={glowRef}
+        className="pointer-events-none fixed w-40 h-40 rounded-full 
+        bg-cyan-400/20 blur-3xl -translate-x-1/2 -translate-y-1/2 z-50"
+      />
 
-        {/* NOISE TEXTURE (BIAR GA FLAT) */}
-        <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-      </div>
+      {/* trail */}
+      {trail.map((t) => (
+        <motion.div
+          key={t.id}
+          className="pointer-events-none fixed w-3 h-3 rounded-full bg-cyan-300/40 blur-sm z-40"
+          style={{ left: t.x, top: t.y }}
+          initial={{ opacity: 0.8, scale: 1 }}
+          animate={{ opacity: 0, scale: 2 }}
+          transition={{ duration: 0.6 }}
+        />
+      ))}
 
       <ThreeScene />
 
@@ -40,109 +160,107 @@ export default function HeroSection() {
             className="flex justify-center md:justify-end"
           >
             <div className="relative group">
+              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 rounded-3xl blur-2xl opacity-70"></div>
 
-              {/* GLOW */}
-              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 blur-xl opacity-50 group-hover:opacity-80 transition duration-700 rounded-3xl"></div>
-
-              <div className="relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-2 shadow-[0_0_60px_rgba(0,255,255,0.2)]">
+              <div className="relative bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-3xl p-2">
                 <img
                   src="/carle.jpg"
                   alt="Rica Hardila"
-                  className="w-64 h-80 md:w-80 md:h-[420px] object-cover rounded-2xl group-hover:scale-105 transition duration-700"
+                  className="w-64 h-80 md:w-80 md:h-[420px] object-cover rounded-2xl"
                 />
               </div>
-
-              <motion.div
-                className="absolute -bottom-4 -right-4 backdrop-blur-md bg-white/10 px-4 py-2 rounded-xl border border-white/20 shadow-xl"
-                animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 4, repeat: Infinity }}
-              >
-                <span className="text-xs font-semibold text-cyan-300">
-                  Web Developer
-                </span>
-              </motion.div>
             </div>
           </motion.div>
 
           {/* TEXT */}
           <div className="text-center md:text-left">
 
-            <motion.span
-              className="inline-block px-4 py-2 rounded-full backdrop-blur-md bg-white/10 text-sm text-cyan-300 mb-6 border border-white/10"
-            >
-              ✨ Glad you’re here. Explore my work!
-            </motion.span>
+            <span className="inline-block px-4 py-2 rounded-full 
+            bg-white/80 dark:bg-white/10 
+            text-gray-800 dark:text-cyan-300 
+            text-sm mb-6 border border-gray-200 dark:border-white/10">
+              ✨ Let's Explore My Work!
+            </span>
 
-            <motion.h1
-              className="text-4xl md:text-6xl font-bold text-white leading-tight"
-            >
-              Access granted!
-              <br />
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+              <span className="text-gray-900 dark:text-white">Access granted!</span><br />
+              <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
                 Rica Hardila
               </span>
-            </motion.h1>
+            </h1>
 
-            <p className="text-white/70 mt-6 max-w-xl">
-              🔭 Setiap langkah kecil adalah bagian dari perjalanan saya memahami teknologi,
-              while continuously exploring creativity and innovation in the digital world.
+            <p className="text-gray-700 dark:text-white/80 mt-6 max-w-xl leading-relaxed">
+              🔭 Setiap proyek kecil adalah bagian dari perjalanan saya memahami teknologi, 
+              <span className="text-cyan-500"> while exploring creativity in the digital world.</span>
             </p>
 
-            {/* 💎 BUTTON DEWA */}
-            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+            {/* BUTTON */}
+            <div className="flex gap-4 mt-8 justify-center md:justify-start">
 
-              {/* PRIMARY */}
+              {/* SCROLL */}
               <button
-                onClick={() => {
-                  const el = document.querySelector('#projects');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="relative px-8 py-3 rounded-full font-semibold text-black overflow-hidden group"
+                onClick={scrollToAbout}
+                onMouseMove={handleMagnet}
+                onMouseLeave={resetMagnet}
+                className="px-8 py-3 rounded-full text-white font-semibold 
+                bg-gradient-to-r from-cyan-400 to-blue-500 hover:scale-105 transition"
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 group-hover:scale-110 transition"></span>
-                <span className="relative z-10">🚀 Explore Projects</span>
+                🚀 Explore
               </button>
 
-              {/* SECONDARY */}
-              <button
-                onClick={() => {
-                  const el = document.querySelector('#contact');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="px-8 py-3 rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20 transition"
+              {/* LINK TAB BARU */}
+              <a
+                href="https://wa.me/your-number"
+                target="_blank"
+                rel="noopener noreferrer"
+                onMouseMove={handleMagnet}
+                onMouseLeave={resetMagnet}
+                className="px-8 py-3 rounded-full 
+                text-gray-800 dark:text-white 
+                bg-white/80 dark:bg-white/10 
+                border border-gray-200 dark:border-white/10 
+                hover:scale-105 transition"
               >
-                ✉️ Let’s Connect
-              </button>
+                ✉️ Contact
+              </a>
 
             </div>
 
             {/* SOCIAL */}
             <div className="flex gap-5 mt-8 justify-center md:justify-start">
               {[ 
-                { icon: Github, href: 'https://github.com/Hardilarle269/Ricarle-.git' },
+                { icon: Github, href: 'https://github.com/Hardilarle269' },
                 { icon: Instagram, href: 'https://www.instagram.com/rca_hrdl/' },
               ].map((item, i) => (
-                <motion.a
+                <a
                   key={i}
                   href={item.href}
                   target="_blank"
-                  className="p-3 rounded-full backdrop-blur-md bg-white/10 border border-white/10 hover:scale-110 hover:shadow-[0_0_20px_rgba(0,255,255,0.5)] transition"
+                  rel="noopener noreferrer"
+                  onMouseMove={handleMagnet}
+                  onMouseLeave={resetMagnet}
+                  className="p-3 rounded-full 
+                  bg-white/80 dark:bg-white/10 
+                  border border-gray-200 dark:border-white/10 
+                  hover:scale-110 transition"
                 >
-                  <item.icon className="text-white w-5 h-5" />
-                </motion.a>
+                  <item.icon className="text-gray-800 dark:text-white w-5 h-5" />
+                </a>
               ))}
             </div>
+
           </div>
         </div>
       </div>
 
-      {/* SCROLL */}
       <motion.button
         onClick={scrollToAbout}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 p-3 rounded-full backdrop-blur-md bg-white/10 border border-white/10"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 p-3 rounded-full 
+        bg-white/80 dark:bg-white/10 
+        border border-gray-200 dark:border-white/10"
         whileHover={{ scale: 1.2 }}
       >
-        <ArrowDown className="text-cyan-300" />
+        <ArrowDown className="text-cyan-500" />
       </motion.button>
     </section>
   );
