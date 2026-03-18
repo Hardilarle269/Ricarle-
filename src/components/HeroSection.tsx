@@ -57,14 +57,13 @@ export default function HeroSection() {
     const animate = () => {
       const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
 
-      // 🔥 FIX WARNA BIAR NYAMBUNG KE BAWAH
       if (isDark) {
         gradient.addColorStop(0, '#020617');
         gradient.addColorStop(1, '#020617');
       } else {
-        gradient.addColorStop(0, '#0f172a');   // gelap atas
-        gradient.addColorStop(0.5, '#1e293b'); // tengah
-        gradient.addColorStop(1, '#334155');   // bawah (nyatu)
+        gradient.addColorStop(0, '#0f172a');
+        gradient.addColorStop(0.5, '#1e293b');
+        gradient.addColorStop(1, '#334155');
       }
 
       ctx.fillStyle = gradient;
@@ -126,20 +125,16 @@ export default function HeroSection() {
 
       <canvas ref={canvasRef} className="absolute inset-0 -z-10" />
 
-      {/* 🔥 overlay lebih halus */}
       <div className="absolute inset-0 bg-white/10 dark:bg-black/50 -z-10"></div>
 
-      {/* 🔥 fade ke bawah biar nyatu */}
       <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-b from-transparent to-black/60 z-0"></div>
 
-      {/* glow */}
       <div
         ref={glowRef}
         className="pointer-events-none fixed w-40 h-40 rounded-full 
         bg-cyan-400/20 blur-3xl -translate-x-1/2 -translate-y-1/2 z-50"
       />
 
-      {/* trail */}
       {trail.map((t) => (
         <motion.div
           key={t.id}
@@ -179,26 +174,28 @@ export default function HeroSection() {
           {/* TEXT */}
           <div className="text-center md:text-left">
 
-            <span className="inline-block px-4 py-2 rounded-full 
-            bg-white/10 
-            text-cyan-300 
-            text-sm mb-6 border border-white/10">
+            {/* 🔥 BADGE FIX TOTAL */}
+            <span className="inline-block px-5 py-2.5 rounded-full 
+            bg-gradient-to-r from-cyan-400 to-blue-500
+            text-white text-sm font-semibold mb-6
+            shadow-lg shadow-cyan-400/40
+            border border-white/20
+            hover:scale-105 hover:shadow-cyan-400/60 transition">
               ✨ Let's Explore My Work!
             </span>
 
             <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-              <span className="text-white">Access granted!</span><br />
+              <span className="text-gray-900 dark:text-white">Access granted!</span><br />
               <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
                 Rica Hardila
               </span>
             </h1>
 
-            <p className="text-white/80 mt-6 max-w-xl leading-relaxed">
+            <p className="text-gray-700 dark:text-white/80 mt-6 max-w-xl leading-relaxed">
               🔭 Setiap proyek kecil adalah bagian dari perjalanan saya memahami teknologi, 
               <span className="text-cyan-400"> while exploring creativity in the digital world.</span>
             </p>
 
-            {/* BUTTON */}
             <div className="flex gap-4 mt-8 justify-center md:justify-start">
 
               <button
@@ -211,7 +208,6 @@ export default function HeroSection() {
                 🚀 Explore
               </button>
 
-              {/* 🔥 target blank TETAP ADA */}
               <a
                 href="https://wa.me/your-number"
                 target="_blank"
@@ -219,7 +215,7 @@ export default function HeroSection() {
                 onMouseMove={handleMagnet}
                 onMouseLeave={resetMagnet}
                 className="px-8 py-3 rounded-full 
-                text-white 
+                text-gray-900 dark:text-white 
                 bg-white/10 
                 border border-white/10 
                 hover:scale-105 transition"
@@ -227,29 +223,6 @@ export default function HeroSection() {
                 ✉️ Contact
               </a>
 
-            </div>
-
-            {/* SOCIAL */}
-            <div className="flex gap-5 mt-8 justify-center md:justify-start">
-              {[ 
-                { icon: Github, href: 'https://github.com/Hardilarle269' },
-                { icon: Instagram, href: 'https://www.instagram.com/rca_hrdl/' },
-              ].map((item, i) => (
-                <a
-                  key={i}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onMouseMove={handleMagnet}
-                  onMouseLeave={resetMagnet}
-                  className="p-3 rounded-full 
-                  bg-white/10 
-                  border border-white/10 
-                  hover:scale-110 transition"
-                >
-                  <item.icon className="text-white w-5 h-5" />
-                </a>
-              ))}
             </div>
 
           </div>
