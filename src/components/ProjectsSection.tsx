@@ -1,6 +1,8 @@
+import { useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, Play } from 'lucide-react';
+import { ExternalLink, Github, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import useEmblaCarousel from 'embla-carousel-react';
 
 const projects = [
   {
@@ -60,9 +62,36 @@ const projects = [
 ];
 
 export default function ProjectsSection() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: 'start',
+    dragFree: true,
+  });
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  // 🔥 AUTOPLAY MANUAL
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const interval = setInterval(() => {
+      emblaApi.scrollNext();
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [emblaApi]);
+
   return (
-    <section id="projects" className="py-20 md:py-32 bg-muted/30">
+    <section id="projects" className="py-20 md:py-32 bg-muted/30 overflow-hidden">
       <div className="container mx-auto px-4">
+        
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -77,78 +106,51 @@ export default function ProjectsSection() {
           <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group"
-            >
-              <div className="h-full p-6 glass rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-2">
-                <div className={`aspect-video rounded-xl mb-4 flex items-center justify-center bg-gradient-to-br ${project.color}`}>
-                  <span className="text-6xl">{project.image}</span>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    {project.isContent && (
-                      <span className="px-2 py-0.5 text-xs rounded-full bg-primary/10 text-primary font-medium">
-                        Content
-                      </span>
-                    )}
-                    <h3 className="font-display text-lg font-bold group-hover:text-primary transition-colors">
+        {/* Carousel */}
+        <div className="relative max-w-7xl mx-auto">
+          <div
+            className="overflow-hidden cursor-grab active:cursor-grabbing"
+            ref={emblaRef}
+          >
+            <div className="flex gap-6 py-4">
+              {projects.map((project, index) => (
+                <div
+                  key={`${project.title}-${index}`}
+                  className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.33%]"
+                >
+                  <div className="h-full p-6 glass rounded-2xl shadow-card hover:shadow-card-hover hover:-translate-y-2 transition-all duration-300 bg-background/50 border border-border">
+                    
+                    <div className={`aspect-video rounded-xl mb-4 flex items-center justify-center bg-gradient-to-br ${project.color}`}>
+                      <span className="text-6xl">{project.image}</span>
+                    </div>
+                    
+                    <h3 className="font-display text-lg font-bold">
                       {project.title}
                     </h3>
                   </div>
-                  
-                  <p className="text-sm text-muted-foreground line-clamp-2">
-                    {project.description}
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-1 text-xs rounded-md bg-secondary text-secondary-foreground"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <div className="flex gap-2 pt-2">
-                    {project.github && (
-                      <Button variant="outline" size="sm" className="rounded-full" asChild>
-                        <a href={project.github}>
-                          <Github className="h-4 w-4 mr-1" />
-                          Code
-                        </a>
-                      </Button>
-                    )}
-                    {project.demo && (
-                      <Button size="sm" className="rounded-full" asChild>
-                        <a href={project.demo}>
-                          <ExternalLink className="h-4 w-4 mr-1" />
-                          Demo
-                        </a>
-                      </Button>
-                    )}
-                    {project.youtube && (
-                      <Button size="sm" className="rounded-full" asChild>
-                        <a href={project.youtube}>
-                          <Play className="h-4 w-4 mr-1" />
-                          Watch
-                        </a>
-                      </Button>
-                    )}
-                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              ))}
+            </div>
+          </div>
+
+          {/* Navigasi */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute -left-4 top-1/2 -translate-y-1/2 rounded-full bg-background shadow-md hidden md:flex"
+            onClick={scrollPrev}
+          >
+            <ChevronLeft />
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute -right-4 top-1/2 -translate-y-1/2 rounded-full bg-background shadow-md hidden md:flex"
+            onClick={scrollNext}
+          >
+            <ChevronRight />
+          </Button>
         </div>
       </div>
     </section>
