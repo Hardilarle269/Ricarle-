@@ -7,155 +7,142 @@ import ThreeScene from './ThreeScene';
 export default function HeroSection() {
   const scrollToAbout = () => {
     const element = document.querySelector('#about');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (element) element.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
-      {/* Background Animasi 3D */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+
+      {/* 🌌 GOD LEVEL BACKGROUND */}
+      <div className="absolute inset-0 -z-10">
+
+        {/* AURORA GRADIENT */}
+        <div className="absolute w-[700px] h-[700px] bg-cyan-500/20 blur-[140px] rounded-full animate-pulse top-[-150px] left-[-150px]" />
+        <div className="absolute w-[600px] h-[600px] bg-purple-500/20 blur-[140px] rounded-full animate-pulse bottom-[-150px] right-[-150px]" />
+
+        {/* COLOR OVERLAY */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-slate-900 to-black opacity-90" />
+
+        {/* NOISE TEXTURE (BIAR GA FLAT) */}
+        <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      </div>
+
       <ThreeScene />
-      
+
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-          
-          {/* KOLOM KIRI: FOTO PROFIL */}
+        <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+
+          {/* FOTO */}
           <motion.div
             initial={{ opacity: 0, x: -60 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex justify-center md:justify-end order-1 md:order-1"
+            transition={{ duration: 0.8 }}
+            className="flex justify-center md:justify-end"
           >
             <div className="relative group">
-              {/* Efek Glow di belakang foto */}
-              <div className="absolute -inset-1.5 bg-gradient-to-r from-primary to-purple-600 rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
-              
-              <div className="relative glass rounded-3xl p-2 border border-white/10 shadow-2xl overflow-hidden">
-                <img 
-                  src="/carle.jpg" // Ganti dengan file carle.jpg
+
+              {/* GLOW */}
+              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 blur-xl opacity-50 group-hover:opacity-80 transition duration-700 rounded-3xl"></div>
+
+              <div className="relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-2 shadow-[0_0_60px_rgba(0,255,255,0.2)]">
+                <img
+                  src="/carle.jpg"
                   alt="Rica Hardila"
-                  className="w-64 h-80 md:w-80 md:h-[420px] object-cover rounded-2xl transition-transform duration-700 group-hover:scale-105"
+                  className="w-64 h-80 md:w-80 md:h-[420px] object-cover rounded-2xl group-hover:scale-105 transition duration-700"
                 />
               </div>
-              
-              {/* Badge Ornamen Floating */}
-              <motion.div 
-                className="absolute -bottom-4 -right-4 glass px-4 py-2 rounded-xl shadow-xl border border-white/20 hidden md:block"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+
+              <motion.div
+                className="absolute -bottom-4 -right-4 backdrop-blur-md bg-white/10 px-4 py-2 rounded-xl border border-white/20 shadow-xl"
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 4, repeat: Infinity }}
               >
-                <span className="text-xs font-bold text-primary">Web Developer</span>
+                <span className="text-xs font-semibold text-cyan-300">
+                  Web Developer
+                </span>
               </motion.div>
             </div>
           </motion.div>
 
-          {/* KOLOM KANAN: KONTEN TEKS */}
-          <div className="text-center md:text-left order-2 md:order-2">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+          {/* TEXT */}
+          <div className="text-center md:text-left">
+
+            <motion.span
+              className="inline-block px-4 py-2 rounded-full backdrop-blur-md bg-white/10 text-sm text-cyan-300 mb-6 border border-white/10"
             >
-              <motion.span 
-                className="inline-block px-4 py-2 rounded-full glass text-sm font-medium text-primary mb-6"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2 }}
-              >
-                ✨ Glad you’re here. Explore my work!
-              </motion.span>
-            </motion.div>
+              ✨ Glad you’re here. Explore my work!
+            </motion.span>
 
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="font-display text-4xl md:text-5xl lg:text-7xl font-bold mb-6 leading-tight"
+              className="text-4xl md:text-6xl font-bold text-white leading-tight"
             >
-             Access granted!
+              Access granted!
               <br />
-              <span className="text-gradient">Rica Hardila</span>
+              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                Rica Hardila
+              </span>
             </motion.h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl mx-auto md:mx-0"
-            >
-               🔭 Setiap proyek kecil adalah bagian dari perjalanan saya memahami teknologi. 
-               A curious mind exploring the endless landscape of the web.
-               
-              
-            </motion.p>
+            <p className="text-white/70 mt-6 max-w-xl">
+              🔭 Setiap langkah kecil adalah bagian dari perjalanan saya memahami teknologi,
+              while continuously exploring creativity and innovation in the digital world.
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 mb-10"
-            >
-              <Button 
-                size="lg" 
-                className="rounded-full px-8 shadow-glow transition-all hover:scale-105"
-                onClick={() => {
-                  const element = document.querySelector('#projects');
-                  if (element) element.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                Lihat Projects
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="rounded-full px-8 hover:bg-primary/10 transition-colors"
-                onClick={() => {
-                  const element = document.querySelector('#contact');
-                  if (element) element.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                Hubungi Saya
-              </Button>
-            </motion.div>
+            {/* 💎 BUTTON DEWA */}
+            <div className="flex flex-col sm:flex-row gap-4 mt-8">
 
-            {/* Social Media */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-              className="flex items-center justify-center md:justify-start gap-6"
-            >
-              {[
-                { icon: Github, href: 'https://github.com/Hardilarle269/Ricarle-.git', label: 'GitHub' },
-                { icon: Instagram, href: 'https://www.instagram.com/rca_hrdl/', label: 'Instagram' },
-              ].map((social) => (
+              {/* PRIMARY */}
+              <button
+                onClick={() => {
+                  const el = document.querySelector('#projects');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="relative px-8 py-3 rounded-full font-semibold text-black overflow-hidden group"
+              >
+                <span className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 group-hover:scale-110 transition"></span>
+                <span className="relative z-10">🚀 Explore Projects</span>
+              </button>
+
+              {/* SECONDARY */}
+              <button
+                onClick={() => {
+                  const el = document.querySelector('#contact');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="px-8 py-3 rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20 transition"
+              >
+                ✉️ Let’s Connect
+              </button>
+
+            </div>
+
+            {/* SOCIAL */}
+            <div className="flex gap-5 mt-8 justify-center md:justify-start">
+              {[ 
+                { icon: Github, href: 'https://github.com/Hardilarle269/Ricarle-.git' },
+                { icon: Instagram, href: 'https://www.instagram.com/rca_hrdl/' },
+              ].map((item, i) => (
                 <motion.a
-                  key={social.label}
-                  href={social.href}
+                  key={i}
+                  href={item.href}
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-full glass hover:shadow-glow transition-all duration-300 border border-white/5"
-                  whileHover={{ scale: 1.15, y: -4, rotate: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                  aria-label={social.label}
+                  className="p-3 rounded-full backdrop-blur-md bg-white/10 border border-white/10 hover:scale-110 hover:shadow-[0_0_20px_rgba(0,255,255,0.5)] transition"
                 >
-                  <social.icon className="h-5 w-5 text-foreground" />
+                  <item.icon className="text-white w-5 h-5" />
                 </motion.a>
               ))}
-            </motion.div>
+            </div>
           </div>
-        </div> 
+        </div>
       </div>
 
-      {/* Button Scroll Down */}
+      {/* SCROLL */}
       <motion.button
         onClick={scrollToAbout}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 p-3 rounded-full glass animate-float cursor-pointer z-20 border border-white/10"
-        whileHover={{ scale: 1.1 }}
-        aria-label="Scroll to About"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 p-3 rounded-full backdrop-blur-md bg-white/10 border border-white/10"
+        whileHover={{ scale: 1.2 }}
       >
-        <ArrowDown className="h-5 w-5 text-primary" />
+        <ArrowDown className="text-cyan-300" />
       </motion.button>
     </section>
   );
