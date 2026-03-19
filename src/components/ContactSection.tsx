@@ -38,11 +38,10 @@ const contactInfo = [
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
-    name: 'Rica Hardila',
-    email: 'ricarlehardilaa@gmail.com',
-    subject: "Ricarle's Portfolio",
-    message:
-      'Perjalanan membuat portfolio ini tidak selalu mudah, sempat menghadapi beberapa error dan almost gave up. Namun, I kept learning and improving hingga akhirnya bisa menyelesaikan ini dengan hasil yang memuaskan. A meaningful step in my journey as a student.',
+    name: '',
+email: '',
+subject: '',
+message: '',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});

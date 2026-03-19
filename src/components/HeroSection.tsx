@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown, Github, Instagram } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 import ThreeScene from './ThreeScene';
 
 export default function HeroSection() {
-  const glowRef = useRef(null);
-  const canvasRef = useRef(null);
-  const [trail, setTrail] = useState([]);
+  const glowRef = useRef<HTMLDivElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [trail, setTrail] = useState<any[]>([]);
   const mouse = useRef({ x: 0, y: 0 });
 
+  // 🔥 MOUSE
   useEffect(() => {
-    const move = (e) => {
+    const move = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
 
@@ -29,12 +30,13 @@ export default function HeroSection() {
     return () => window.removeEventListener('mousemove', move);
   }, []);
 
+  // 🌌 BACKGROUND
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext('2d')!;
 
-    let stars = [];
-    let animationId;
+    let stars: any[] = [];
+    let animationId: number;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -44,51 +46,30 @@ export default function HeroSection() {
     resize();
     window.addEventListener('resize', resize);
 
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 150; i++) {
       stars.push({
-        x: (Math.random() - 0.5) * canvas.width,
-        y: (Math.random() - 0.5) * canvas.height,
-        z: Math.random() * canvas.width
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 1.5,
+        speed: Math.random() * 0.3
       });
     }
 
-    const isDark = document.documentElement.classList.contains('dark');
-
     const animate = () => {
       const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-
-      if (isDark) {
-        gradient.addColorStop(0, '#020617');
-        gradient.addColorStop(1, '#020617');
-      } else {
-        gradient.addColorStop(0, '#0f172a');
-        gradient.addColorStop(0.5, '#1e293b');
-        gradient.addColorStop(1, '#334155');
-      }
+      gradient.addColorStop(0, '#a18cd1');
+      gradient.addColorStop(0.5, '#8fd3f4');
+      gradient.addColorStop(1, '#fbc2eb');
 
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      const mx = (mouse.current.x - canvas.width / 2) * 0.0005;
-      const my = (mouse.current.y - canvas.height / 2) * 0.0005;
-
       stars.forEach((star) => {
-        star.z -= 2;
-        if (star.z <= 0) star.z = canvas.width;
+        star.y += star.speed;
+        if (star.y > canvas.height) star.y = 0;
 
-        const k = 128 / star.z;
-        const x = star.x * k + canvas.width / 2 + mx * star.z * 2;
-        const y = star.y * k + canvas.height / 2 + my * star.z * 2;
-
-        const size = (1 - star.z / canvas.width) * 3;
-
-        ctx.beginPath();
-        ctx.fillStyle = isDark
-          ? 'rgba(255,255,255,0.9)'
-          : 'rgba(99,102,241,0.7)';
-
-        ctx.arc(x, y, size, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,0.7)';
+        ctx.fillRect(star.x, star.y, star.size, star.size);
       });
 
       animationId = requestAnimationFrame(animate);
@@ -102,17 +83,40 @@ export default function HeroSection() {
     };
   }, []);
 
-  const handleMagnet = (e) => {
+  // 🧲 MAGNET SUPER GLOW
+  const handleMagnet = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     const el = e.currentTarget;
     const rect = el.getBoundingClientRect();
+
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
 
-    el.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+    el.style.transform = `
+      translate(${x * 0.3}px, ${y * 0.3}px)
+      scale(1.15)
+    `;
+
+    el.style.background = `
+      linear-gradient(135deg, #22d3ee, #3b82f6, #a855f7, #ec4899)
+    `;
+
+    el.style.boxShadow = `
+      0 0 25px #22d3ee,
+      0 0 50px #3b82f6,
+      0 0 80px #a855f7,
+      0 0 120px #ec4899
+    `;
+
+    el.style.filter = "brightness(1.3)";
   };
 
-  const resetMagnet = (e) => {
-    e.currentTarget.style.transform = 'translate(0px, 0px)';
+  const resetMagnet = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+    const el = e.currentTarget;
+
+    el.style.transform = "translate(0px, 0px) scale(1)";
+    el.style.boxShadow = "none";
+    el.style.filter = "none";
+    el.style.background = "";
   };
 
   const scrollToAbout = () => {
@@ -123,32 +127,35 @@ export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-      <canvas ref={canvasRef} className="absolute inset-0 -z-10" />
+      {/* 🌌 BACKGROUND */}
+      <canvas ref={canvasRef} className="absolute inset-0 -z-20" />
 
-      <div className="absolute inset-0 bg-white/10 dark:bg-black/50 -z-10"></div>
+      <div className="absolute inset-0 bg-white/20 dark:bg-black/40 backdrop-blur-[2px] -z-10"></div>
 
-      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-b from-transparent to-black/60 z-0"></div>
-
+      {/* 🌈 CURSOR GLOW */}
       <div
         ref={glowRef}
-        className="pointer-events-none fixed w-40 h-40 rounded-full 
-        bg-cyan-400/20 blur-3xl -translate-x-1/2 -translate-y-1/2 z-50"
+        className="pointer-events-none fixed w-80 h-80 rounded-full 
+        bg-gradient-to-br from-cyan-400/40 via-blue-400/30 to-purple-400/40
+        blur-3xl -translate-x-1/2 -translate-y-1/2 z-10"
       />
 
+      {/* ✨ TRAIL */}
       {trail.map((t) => (
         <motion.div
           key={t.id}
-          className="pointer-events-none fixed w-3 h-3 rounded-full bg-cyan-300/40 blur-sm z-40"
+          className="pointer-events-none fixed w-2 h-2 rounded-full bg-white/70 blur-sm z-20"
           style={{ left: t.x, top: t.y }}
-          initial={{ opacity: 0.8, scale: 1 }}
+          initial={{ opacity: 1, scale: 1 }}
           animate={{ opacity: 0, scale: 2 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
         />
       ))}
 
       <ThreeScene />
 
-      <div className="container mx-auto px-4 relative z-10">
+      {/* CONTENT */}
+      <div className="container mx-auto px-4 relative z-30">
         <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
 
           {/* FOTO */}
@@ -159,7 +166,7 @@ export default function HeroSection() {
             className="flex justify-center md:justify-end"
           >
             <div className="relative group">
-              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 rounded-3xl blur-2xl opacity-70"></div>
+              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 rounded-3xl blur-2xl opacity-80"></div>
 
               <div className="relative bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl p-2">
                 <img
@@ -174,13 +181,12 @@ export default function HeroSection() {
           {/* TEXT */}
           <div className="text-center md:text-left">
 
-            {/* 🔥 BADGE FIX TOTAL */}
             <span className="inline-block px-5 py-2.5 rounded-full 
             bg-gradient-to-r from-cyan-400 to-blue-500
             text-white text-sm font-semibold mb-6
-            shadow-lg shadow-cyan-400/40
+            shadow-lg shadow-cyan-400/50
             border border-white/20
-            hover:scale-105 hover:shadow-cyan-400/60 transition">
+            hover:scale-105 transition">
               ✨ Let's Explore My Work!
             </span>
 
@@ -198,42 +204,42 @@ export default function HeroSection() {
 
             <div className="flex gap-4 mt-8 justify-center md:justify-start">
 
+              {/* 🚀 EXPLORE */}
               <button
                 onClick={scrollToAbout}
                 onMouseMove={handleMagnet}
                 onMouseLeave={resetMagnet}
                 className="px-8 py-3 rounded-full text-white font-semibold 
-                bg-gradient-to-r from-cyan-400 to-blue-500 hover:scale-105 transition"
+                bg-gradient-to-r from-cyan-400 to-blue-500 
+                transition-all duration-300"
               >
                 🚀 Explore
               </button>
 
+              {/* ✉️ CONTACT */}
               <a
                 href="https://wa.me/your-number"
                 target="_blank"
                 rel="noopener noreferrer"
                 onMouseMove={handleMagnet}
                 onMouseLeave={resetMagnet}
-                className="px-8 py-3 rounded-full 
-                text-gray-900 dark:text-white 
-                bg-white/10 
-                border border-white/10 
-                hover:scale-105 transition"
+                className="px-8 py-3 rounded-full text-white 
+                bg-gray-800/40 border border-white/20 
+                transition-all duration-300"
               >
                 ✉️ Contact
               </a>
 
             </div>
-
           </div>
         </div>
       </div>
 
+      {/* ⬇️ */}
       <motion.button
         onClick={scrollToAbout}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 p-3 rounded-full 
-        bg-white/10 
-        border border-white/10"
+        bg-white/10 border border-white/10 z-30"
         whileHover={{ scale: 1.2 }}
       >
         <ArrowDown className="text-cyan-400" />

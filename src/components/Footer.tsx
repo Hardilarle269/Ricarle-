@@ -36,15 +36,26 @@ export default function Footer() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             className="
-            flex items-center gap-2 text-sm
+            flex items-center gap-2 text-sm font-medium tracking-wide
 
-            text-white/90
+            /* ✨ LIGHT MODE (DI UPGRADE) */
+            text-gray-700
+
+            /* 🌙 DARK MODE (TETAP) */
             dark:text-white/70
             "
           >
-            <span>© {currentYear} Made with</span>
-            <Heart className="h-4 w-4 text-red-400 fill-red-400" />
-            <span>by Rica Hardila</span>
+            <span>© {currentYear} Crafted with</span>
+
+            <Heart className="h-4 w-4 text-red-400 fill-red-400 animate-pulse" />
+
+            <span className="
+              bg-gradient-to-r 
+              from-cyan-500 via-blue-500 to-purple-500 
+              bg-clip-text text-transparent font-semibold
+            ">
+              by Rica Hardila
+            </span>
           </motion.div>
 
           {/* SOCIAL */}
