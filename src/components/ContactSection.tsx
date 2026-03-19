@@ -39,9 +39,9 @@ const contactInfo = [
 export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: '',
-email: '',
-subject: '',
-message: '',
+    email: '',
+    subject: '',
+    message: '',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -83,14 +83,14 @@ message: '',
 
       toast({
         title: 'Pesan Terkirim! ✨',
-        description: 'Terima kasih telah menghubungi saya.',
+        description: 'Terima kasih sudah menghubungi aku 💙',
       });
 
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
       toast({
-        title: 'Gagal Mengirim',
-        description: 'Terjadi kesalahan.',
+        title: 'Gagal Mengirim 😢',
+        description: 'Coba lagi nanti ya',
         variant: 'destructive',
       });
     } finally {
@@ -101,18 +101,8 @@ message: '',
   return (
     <section
       id="contact"
-      className="
-      relative py-20 md:py-32 overflow-hidden
-
-      bg-gradient-to-br 
-      from-[#020617] via-[#020617] to-[#0f172a]
-
-      before:absolute before:inset-0
-      before:bg-[radial-gradient(circle_at_20%_30%,rgba(168,85,247,0.25),transparent_40%)]
-
-      after:absolute after:inset-0
-      after:bg-[radial-gradient(circle_at_80%_70%,rgba(34,211,238,0.2),transparent_40%)]
-      "
+      className="relative py-20 md:py-32 overflow-hidden
+      bg-gradient-to-br from-[#020617] via-[#020617] to-[#0f172a]"
     >
       <div className="container mx-auto px-4 relative z-10">
 
@@ -126,11 +116,9 @@ message: '',
             Contact
           </span>
 
-          <h2 className="
-            text-3xl md:text-5xl font-bold mb-4
-            bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400
-            bg-clip-text text-transparent
-          ">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4
+          bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400
+          bg-clip-text text-transparent">
             Get In Touch
           </h2>
 
@@ -140,110 +128,82 @@ message: '',
         <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
 
           {/* LEFT */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            className="space-y-8"
+          <div className="space-y-6">
+            {contactInfo.map((info) => (
+              <a key={info.label} href={info.href}
+                className="flex items-center gap-4 p-4 bg-white/5 border border-white/10 rounded-xl">
+                <info.icon className="text-purple-300" />
+                <div>
+                  <p className="text-white/50 text-sm">{info.label}</p>
+                  <p className="text-white">{info.value}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          {/* RIGHT FORM */}
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-5 p-6 bg-white/5 border border-white/10 rounded-2xl"
           >
+
+            {/* NAME */}
             <div>
-              <h3 className="text-2xl font-bold mb-4 text-white">
-                Let’s Work Together 💯
-              </h3>
-
-              <p className="text-white/70 leading-relaxed">
-                Punya ide atau project sederhana? Let’s talk.  
-                Aku masih belajar, tapi terbuka untuk kolaborasi dan mencoba hal baru together.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              {contactInfo.map((info, index) => (
-                <motion.a
-                  key={info.label}
-                  href={info.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="
-                  flex items-center gap-4 p-4
-                  bg-white/5 backdrop-blur-xl
-                  border border-white/10
-                  rounded-xl
-
-                  hover:shadow-[0_0_30px_rgba(168,85,247,0.3)]
-                  transition-all group
-                  "
-                >
-                  <div className="p-3 rounded-lg bg-purple-500/20">
-                    <info.icon className="h-5 w-5 text-purple-300" />
-                  </div>
-
-                  <div>
-                    <p className="text-sm text-white/50">{info.label}</p>
-                    <p className="text-white font-medium">{info.value}</p>
-                  </div>
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* RIGHT */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-          >
-            <form
-              onSubmit={handleSubmit}
-              className="
-              space-y-6 p-6
-              bg-white/5 backdrop-blur-xl
-              border border-white/10
-              rounded-2xl
-
-              shadow-[0_0_40px_rgba(236,72,153,0.2)]
-              "
-            >
+              <label className="text-white/70 text-sm">Name</label>
               <Input
                 name="name"
+                placeholder="Your Name ✨"
                 value={formData.name}
                 onChange={handleChange}
                 className="bg-white/5 border-white/10 text-white placeholder:text-white/40"
               />
+            </div>
 
+            {/* EMAIL */}
+            <div>
+              <label className="text-white/70 text-sm">Email</label>
               <Input
                 name="email"
+                placeholder="your@email.com 📩"
                 value={formData.email}
                 onChange={handleChange}
                 className="bg-white/5 border-white/10 text-white"
               />
+            </div>
 
+            {/* SUBJECT */}
+            <div>
+              <label className="text-white/70 text-sm">Subject</label>
               <Input
                 name="subject"
+                placeholder="Subject 💬"
                 value={formData.subject}
                 onChange={handleChange}
                 className="bg-white/5 border-white/10 text-white"
               />
+            </div>
 
+            {/* MESSAGE */}
+            <div>
+              <label className="text-white/70 text-sm">Message</label>
               <Textarea
                 name="message"
+                placeholder="Write your message... 🚀"
                 value={formData.message}
                 onChange={handleChange}
                 className="bg-white/5 border-white/10 text-white"
               />
+            </div>
 
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="
-                w-full
-                bg-gradient-to-r from-purple-500 to-pink-500
-                hover:opacity-90
-                "
-              >
-                {isSubmitting ? 'Mengirim...' : 'Kirim Pesan'}
-              </Button>
-            </form>
-          </motion.div>
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-gradient-to-r from-purple-500 to-pink-500"
+            >
+              {isSubmitting ? 'Mengirim...' : 'Kirim Pesan'}
+            </Button>
+
+          </form>
         </div>
       </div>
     </section>
