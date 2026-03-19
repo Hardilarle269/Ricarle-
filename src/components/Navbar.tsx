@@ -22,10 +22,10 @@ export default function Navbar({ isDark, toggleTheme }: NavbarProps) {
 
   const navItems = [
     { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Who Am I?🧠⚡', href: '#about' },
+    { label: 'Academic Abilities📚', href: '#skills' },
+    { label: 'My Ultimate Watch🍿', href: '#projects' },
+    { label: 'Get in Touch', href: 'https://wa.me/6281265074129' },
   ];
 
   const scrollToSection = (href: string) => {
@@ -41,17 +41,18 @@ export default function Navbar({ isDark, toggleTheme }: NavbarProps) {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? isDark
-            ? // 🌙 DARK MODE (VERSI HIDUP + GLOW)
-              `backdrop-blur-xl 
+            ? `backdrop-blur-xl 
                bg-gradient-to-r 
                from-[#020617]/95 via-[#4c1d95]/90 to-[#7e22ce]/90 
                border-b border-purple-400/20 
                shadow-[0_4px_40px_rgba(124,58,237,0.4)]`
-            : // ☀️ LIGHT MODE (tetap)
-              'backdrop-blur-xl bg-gradient-to-r from-[#a18cd1]/90 via-[#fbc2eb]/90 to-[#8fd3f4]/90 border-b border-white/30 shadow-[0_4px_20px_rgba(168,85,247,0.25)]'
+            : `backdrop-blur-xl 
+               bg-gradient-to-r 
+               from-[#a18cd1]/90 via-[#fbc2eb]/90 to-[#8fd3f4]/90 
+               border-b border-white/30 
+               shadow-[0_4px_20px_rgba(168,85,247,0.25)]`
           : isDark
-          ? // 🌙 DARK MODE (BELUM SCROLL)
-            'bg-gradient-to-r from-[#020617]/80 via-[#4c1d95]/70 to-[#7e22ce]/70'
+          ? 'bg-gradient-to-r from-[#020617]/80 via-[#4c1d95]/70 to-[#7e22ce]/70'
           : 'bg-gradient-to-r from-[#a18cd1]/70 via-[#fbc2eb]/70 to-[#8fd3f4]/70'
       }`}
     >
@@ -66,9 +67,10 @@ export default function Navbar({ isDark, toggleTheme }: NavbarProps) {
               scrollToSection('#home');
             }}
             className={`text-xl md:text-2xl font-bold cursor-pointer 
-            ${isDark 
-              ? 'bg-gradient-to-r from-cyan-300 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent drop-shadow-lg'
-              : 'text-white drop-shadow-md'
+            ${
+              isDark
+                ? 'bg-gradient-to-r from-cyan-300 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent drop-shadow-lg'
+                : 'bg-gradient-to-r from-purple-700 via-pink-500 to-indigo-500 bg-clip-text text-transparent'
             }`}
             whileHover={{ scale: 1.1 }}
           >
@@ -86,13 +88,17 @@ export default function Navbar({ isDark, toggleTheme }: NavbarProps) {
                   scrollToSection(item.href);
                 }}
                 className={`relative font-medium transition-all
-                  ${isDark ? 'text-white/70 hover:text-purple-300' : 'text-white hover:text-white/90'}
-                `}
+                ${
+                  isDark
+                    ? 'text-white/70 hover:text-purple-300'
+                    : 'text-[#1A1A1A] hover:text-purple-700'
+                }`}
                 whileHover={{ y: -2 }}
               >
                 {item.label}
 
-                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gradient-to-r from-purple-400 to-pink-400 transition-all duration-300 group-hover:w-full"></span>
+                {/* underline animasi */}
+                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-300 group-hover:w-full"></span>
               </motion.a>
             ))}
 
@@ -101,7 +107,11 @@ export default function Navbar({ isDark, toggleTheme }: NavbarProps) {
               variant="ghost"
               size="icon"
               onClick={toggleTheme}
-              className="rounded-full text-white hover:bg-purple-500/20"
+              className={`rounded-full ${
+                isDark
+                  ? 'text-white hover:bg-purple-500/20'
+                  : 'text-[#1A1A1A] hover:bg-purple-200/40'
+              }`}
             >
               <AnimatePresence mode="wait">
                 {isDark ? (
@@ -141,7 +151,7 @@ export default function Navbar({ isDark, toggleTheme }: NavbarProps) {
               variant="ghost"
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-white"
+              className={isDark ? 'text-white' : 'text-[#1A1A1A]'}
             >
               {isMobileMenuOpen ? <X /> : <Menu />}
             </Button>
@@ -157,9 +167,9 @@ export default function Navbar({ isDark, toggleTheme }: NavbarProps) {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             className={`md:hidden backdrop-blur-xl ${
-              isDark 
-                ? 'bg-black/70 border-t border-purple-400/20' 
-                : 'bg-white/60 border-t border-gray-300'
+              isDark
+                ? 'bg-black/70 border-t border-purple-400/20'
+                : 'bg-white/70 border-t border-gray-300'
             }`}
           >
             <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
@@ -172,7 +182,9 @@ export default function Navbar({ isDark, toggleTheme }: NavbarProps) {
                     scrollToSection(item.href);
                   }}
                   className={`${
-                    isDark ? 'text-white/70 hover:text-purple-300' : 'text-gray-800 hover:text-black'
+                    isDark
+                      ? 'text-white/70 hover:text-purple-300'
+                      : 'text-[#1A1A1A] hover:text-purple-700'
                   } transition`}
                 >
                   {item.label}
