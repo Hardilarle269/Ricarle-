@@ -29,7 +29,6 @@ export default function HeroSection({ isDark }) {
     return () => window.removeEventListener('mousemove', move);
   }, []);
 
-  // 🌅 BACKGROUND FIX
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -58,12 +57,10 @@ export default function HeroSection({ isDark }) {
       const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
 
       if (isDark) {
-        // 🌅 DARK = SUNSET KONTRAS
         gradient.addColorStop(0, '#7c2d12');
         gradient.addColorStop(0.5, '#ea580c');
         gradient.addColorStop(1, '#fb923c');
       } else {
-        // ☀️ LIGHT = KUNING CERAH + KONTRAS
         gradient.addColorStop(0, '#fff7b0');
         gradient.addColorStop(0.5, '#fde047');
         gradient.addColorStop(1, '#facc15');
@@ -119,14 +116,11 @@ export default function HeroSection({ isDark }) {
 
       <canvas ref={canvasRef} className="absolute inset-0 -z-20" />
 
-      {/* ❌ HAPUS HITAM → DIGANTI WARM */}
-      <div
-        className={`absolute inset-0 -z-10 ${
-          isDark ? 'bg-orange-500/10' : 'bg-yellow-200/30'
-        }`}
-      />
+      <div className={`absolute inset-0 -z-10 ${
+        isDark ? 'bg-orange-500/10' : 'bg-yellow-200/30'
+      }`} />
 
-      {/* GLOW */}
+      {/* glow cursor (tetap, bukan text glow) */}
       <div
         ref={glowRef}
         className="pointer-events-none fixed w-80 h-80 rounded-full 
@@ -134,7 +128,6 @@ export default function HeroSection({ isDark }) {
         blur-3xl -translate-x-1/2 -translate-y-1/2 z-10"
       />
 
-      {/* TRAIL */}
       {trail.map((t) => (
         <motion.div
           key={t.id}
@@ -186,20 +179,27 @@ export default function HeroSection({ isDark }) {
             </span>
 
             <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
-              {/* 🔥 KONTRAS FIX */}
-              <span className={isDark ? 'text-white drop-shadow-lg' : 'text-gray-900 drop-shadow-md'}>
+              
+              {/* ✅ TANPA GLOW */}
+              <span className={isDark ? 'text-white' : 'text-orange-950'}>
                 Akses Dimulai
-              </span><br />
+              </span>
+
+              <br />
+
               <span className="bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 bg-clip-text text-transparent">
                 Aderun Nafis
               </span>
             </h1>
 
+            {/* ✅ PARAGRAF FIX */}
             <p className={`mt-6 max-w-xl text-lg font-medium ${
-              isDark ? 'text-white/95' : 'text-gray-900'
+              isDark
+                ? 'text-yellow-100'
+                : 'text-orange-900'
             }`}>
               ✨ Dalam setiap proyek kecil, terukir perjalanan menuju 
-              <span className="text-amber-700 font-bold italic"> penguasaan teknologi </span> 
+              <span className="text-amber-800 font-bold italic"> penguasaan teknologi </span> 
               dan masa depan di dunia digital.
             </p>
 
@@ -226,6 +226,7 @@ export default function HeroSection({ isDark }) {
               </a>
             </div>
           </div>
+
         </div>
       </div>
 
