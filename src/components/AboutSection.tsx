@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Coffee, Rocket, ChevronDown, Sparkles, GraduationCap, Target } from 'lucide-react';
 
 const STATS = [
-  { icon: Coffee, value: '100+', label: 'Cangkir Matcha' },
-  { icon: Rocket, value: '3+', label: 'Tahun Pengalaman' },
+  { icon: Coffee, value: '1000+', label: 'Cangkir Cafe Latte' },
+  { icon: Rocket, value: '200+', label: 'Tinta Pulpen' },
 ];
 
 const ACCORDION_DATA = [
@@ -13,28 +13,29 @@ const ACCORDION_DATA = [
     icon: <GraduationCap className="w-5 h-5" />,
     title: "Perkenalan & Pendidikan",
     content:
-      "Nama saya Rica Hardila, lahir pada 15 Desember 2009 di Banda Aceh. I am the youngest of three siblings with two older brothers as my role models. Sejak kecil, saya dibesarkan dengan disiplin dan tanggung jawab. Currently, I study at MAN 1 Banda Aceh in a government class. Lingkungan ini membentuk saya menjadi pribadi yang terstruktur, berintegritas, dan siap menghadapi tantangan, termasuk di bidang teknologi."
+      "Perkenalkan, saya Aderun Nafis, lahir pada 18 Juli 2009. Saya merupakan anak tengah dari tiga bersaudara yang tumbuh dengan nilai disiplin dan tanggung jawab. Saat ini saya menempuh pendidikan di MAN 1 Banda Aceh dan terus mengembangkan diri menjadi pribadi yang terarah serta siap menghadapi tantangan."
   },
   {
     id: 'vision',
     icon: <Target className="w-5 h-5" />,
     title: "Visi & Cita-cita",
     content:
-      "Saya ingin berkembang sebagai individu yang tidak hanya memahami teknologi, tetapi juga mampu menciptakan pengalaman digital yang bermakna. With a focus on modern web development using React, saya membangun digital solutions yang clean, aesthetic, dan impactful. Bagi saya, teknologi bukan hanya tentang sistem, tetapi tentang bagaimana sebuah produk bisa terasa hidup dan berguna bagi banyak orang. Sejalan dengan itu, saya bercita-cita menjadi Polwan yang profesional, berintegritas, dan humanis."
+      "Saya memiliki tekad untuk terus berkembang dan memberikan kontribusi nyata bagi masyarakat. Dengan persiapan yang matang, saya ingin melanjutkan pendidikan ke IPDN dan berkarier sebagai Aparatur Sipil Negara (PNS) yang profesional, berintegritas, dan siap mengabdi."
   }
 ];
 
-export default function AboutSection() {
+export default function AboutSection({ isDark }) {
   const [expanded, setExpanded] = useState(null);
 
   return (
     <section
       id="about"
-      className="relative py-20 md:py-32 overflow-hidden bg-gradient-to-br from-[#020617] via-[#022c22] to-[#064e3b]"
+      className={`relative py-20 md:py-32 overflow-hidden ${
+        isDark
+          ? 'bg-gradient-to-br from-[#7c2d12] via-[#ea580c] to-[#fb923c]'
+          : 'bg-gradient-to-br from-[#fffde7] via-[#fff9c4] to-[#fff59d]'
+      }`}
     >
-
-      {/* ✨ GLOW BACKGROUND */}
-      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-purple-500/10 blur-3xl"></div>
 
       <div className="container mx-auto px-4 relative z-10">
 
@@ -42,137 +43,131 @@ export default function AboutSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="flex items-center justify-center gap-2 text-cyan-400 font-bold tracking-widest uppercase text-sm mb-3">
+          <span className="flex items-center justify-center gap-2 text-orange-500 font-bold tracking-widest uppercase text-sm mb-3">
             <Sparkles size={16} />
-            Who Am I? 🧠⚡
+            Kenalan Lebih Dekat⚡
           </span>
 
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">
-            Know Me Better 💫
+          <h2 className={`text-3xl md:text-5xl font-bold mb-4 ${
+            isDark ? 'text-white' : 'text-orange-900'
+          }`}>
+            Tentang Aku 💫
           </h2>
 
-          <div className="w-20 h-1 bg-cyan-400 mx-auto rounded-full" />
+          <div className="w-20 h-1 bg-orange-500 mx-auto rounded-full" />
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 items-start max-w-6xl mx-auto">
 
-          {/* KIRI */}
+          {/* FOTO */}
           <div className="space-y-8">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="relative group"
-            >
+            <div className="relative group">
 
-              {/* 🔥 GLOW FRAME */}
-              <div className="absolute -inset-2 bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-300 rounded-2xl blur-2xl opacity-70 group-hover:opacity-100 transition duration-500"></div>
+              {/* GLOW */}
+              <div className={`absolute -inset-2 rounded-2xl blur-2xl opacity-80 transition duration-500 ${
+                isDark
+                  ? 'bg-gradient-to-r from-yellow-300 via-amber-300 to-yellow-200'
+                  : 'bg-gradient-to-r from-orange-500 via-orange-600 to-amber-700'
+              }`}></div>
 
-              {/* FOTO */}
-              <div className="relative p-[3px] rounded-2xl bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-300">
-                <div className="aspect-square rounded-2xl overflow-hidden bg-black/40 backdrop-blur-sm border border-white/10">
+              <div className="relative p-[3px] rounded-2xl bg-white/30">
+                <div className="aspect-square rounded-2xl overflow-hidden bg-white/20 backdrop-blur-sm">
                   <img
-                    src="/profile.jpg"
+                    src="/nafis.jpg"
                     alt="profile"
                     className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
                   />
                 </div>
               </div>
-
-              {/* BADGE */}
-              <div className="absolute -bottom-6 -right-6 p-4 rounded-xl bg-white/10 backdrop-blur-md border border-white/10 shadow-lg">
-                <p className="font-bold text-2xl text-cyan-300">3+ Tahun</p>
-                <p className="text-sm text-white/70">Pengalaman</p>
-              </div>
-            </motion.div>
+            </div>
 
             {/* STATS */}
             <div className="grid grid-cols-2 gap-4">
-              {STATS.map((stat, index) => (
+              {STATS.map((stat, i) => (
                 <motion.div
-                  key={stat.label}
+                  key={i}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="p-4 rounded-xl text-center bg-white/5 backdrop-blur-md border border-white/10 hover:border-cyan-400 transition-all"
+                  transition={{ delay: i * 0.1 }}
+                  className={`p-4 rounded-xl text-center backdrop-blur-md transition ${
+                    isDark
+                      ? 'bg-white/10 text-white hover:bg-white/20'
+                      : 'bg-white/40 text-orange-900 hover:bg-white/60'
+                  }`}
                 >
-                  <stat.icon className="h-6 w-6 text-cyan-300 mx-auto mb-2" />
-                  <p className="text-2xl font-bold text-white">{stat.value}</p>
-                  <p className="text-sm text-white/60">{stat.label}</p>
+                  <stat.icon className="h-6 w-6 mx-auto mb-2" />
+                  <p className="text-2xl font-bold">{stat.value}</p>
+                  <p className="text-sm">{stat.label}</p>
                 </motion.div>
               ))}
             </div>
           </div>
 
-          {/* KANAN */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-2xl md:text-3xl font-bold text-white">
-                Future Web Developer 🚀
-              </h3>
+          {/* TEXT */}
+          <div className="space-y-6 p-6 rounded-2xl shadow-lg bg-orange-400/20 backdrop-blur-sm">
+            <h3 className={`text-2xl md:text-3xl font-bold ${
+              isDark ? 'text-white' : 'text-orange-900'
+            }`}>
+              Calon Abdi Negara 🚀
+            </h3>
 
-              <p className="text-white/70 leading-relaxed text-lg mt-2">
-                Hi, I’m <strong className="text-white">Rica Hardila</strong> ✨ 
-                Seorang pelajar di 
-                <span className="text-cyan-400 font-medium"> MAN 1 Banda Aceh</span>.
-              </p>
-            </motion.div>
+            <p className={`text-lg ${
+              isDark ? 'text-white/90' : 'text-orange-900'
+            }`}>
+              Halo, saya <strong>Aderun Nafis</strong>, pelajar dari MAN 1 Banda Aceh.
+            </p>
 
             {/* ACCORDION */}
-            <div className="space-y-3 pt-4">
+            <div className="space-y-3">
               {ACCORDION_DATA.map((item, idx) => (
-                <motion.div
-                  key={item.id}
-                  className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-md overflow-hidden"
-                >
+                <div key={item.id} className="rounded-xl overflow-hidden">
 
+                  {/* HEADER */}
                   <button
                     onClick={() => setExpanded(expanded === idx ? null : idx)}
-                    className="w-full flex items-center justify-between p-4 hover:bg-white/10 transition"
+                    className={`w-full flex justify-between items-center p-4 transition ${
+                      isDark
+                        ? 'bg-white/10 text-white hover:bg-white/20'
+                        : 'bg-white/40 text-orange-900 hover:bg-white/60'
+                    }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-cyan-400/10 text-cyan-300">
-                        {item.icon}
-                      </div>
-                      <span className="font-bold text-white">{item.title}</span>
+                    <div className="flex items-center gap-2">
+                      {item.icon}
+                      <span className="font-semibold">{item.title}</span>
                     </div>
 
                     <ChevronDown
-                      className={`w-5 h-5 text-white transition ${
+                      className={`transition-transform duration-300 ${
                         expanded === idx ? 'rotate-180' : ''
                       }`}
                     />
                   </button>
 
+                  {/* CONTENT */}
                   <AnimatePresence>
                     {expanded === idx && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
+                        animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3 }}
                       >
-                        <div className="p-4 text-white/70 leading-relaxed">
+                        <div className={`p-4 ${
+                          isDark ? 'text-white/90' : 'text-orange-900'
+                        }`}>
                           {item.content}
                         </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
 
-                </motion.div>
+                </div>
               ))}
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
     </section>
