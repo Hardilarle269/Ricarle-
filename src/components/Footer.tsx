@@ -15,16 +15,16 @@ export default function Footer() {
       py-8 
       transition-all duration-300
 
-      /* ☀️ LIGHT MODE */
+      /* ☀️ LIGHT MODE (FIXED) */
       bg-gradient-to-r 
-      from-[#a18cd1]/90 via-[#fbc2eb]/90 to-[#8fd3f4]/90
-      border-t border-white/30
+      from-yellow-200 via-amber-300 to-orange-300
+      border-t border-orange-300/40
+      shadow-[0_-10px_30px_rgba(251,191,36,0.2)]
 
-      /* 🌙 DARK MODE */
+      /* 🌙 DARK MODE (BIAR MATCH SUNSET) */
       dark:bg-gradient-to-r 
-      dark:from-[#020617] dark:via-[#1e1b4b] dark:to-[#4c1d95]
-      dark:border-purple-500/20
-      dark:shadow-[0_-4px_30px_rgba(124,58,237,0.3)]
+      dark:from-[#7c2d12] dark:via-[#ea580c] dark:to-[#fb923c]
+      dark:border-orange-400/20
       "
     >
       <div className="container mx-auto px-4">
@@ -38,11 +38,11 @@ export default function Footer() {
             className="
             flex items-center gap-2 text-sm font-medium tracking-wide
 
-            /* ✨ LIGHT MODE (DI UPGRADE) */
-            text-gray-700
+            /* ✨ LIGHT MODE (NYATU & KEBACA) */
+            text-orange-900
 
-            /* 🌙 DARK MODE (TETAP) */
-            dark:text-white/70
+            /* 🌙 DARK MODE */
+            dark:text-white/80
             "
           >
             <span>© {currentYear} Crafted with</span>
@@ -51,10 +51,10 @@ export default function Footer() {
 
             <span className="
               bg-gradient-to-r 
-              from-cyan-500 via-blue-500 to-purple-500 
+              from-orange-600 via-amber-600 to-yellow-500 
               bg-clip-text text-transparent font-semibold
             ">
-              by Rica Hardila
+              by Aderun Nafis
             </span>
           </motion.div>
 
@@ -75,11 +75,11 @@ export default function Footer() {
                 className="
                 p-2 rounded-full transition-all duration-300
 
-                /* LIGHT */
-                text-white hover:bg-white/20 hover:scale-110
+                /* ☀️ LIGHT */
+                text-orange-800 hover:bg-white/30 hover:scale-110
 
-                /* DARK */
-                dark:text-white/70 dark:hover:text-purple-300 dark:hover:bg-purple-500/20
+                /* 🌙 DARK */
+                dark:text-white/70 dark:hover:text-yellow-300 dark:hover:bg-white/10
                 "
               >
                 <social.icon className="h-5 w-5" />
