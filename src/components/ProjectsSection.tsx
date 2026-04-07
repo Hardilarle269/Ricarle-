@@ -6,54 +6,53 @@ import useEmblaCarousel from 'embla-carousel-react';
 
 const projects = [
   {
-    title: '🎬 All of Us Are Dead',
+    title: '📷 Photograph – Ed Sheeran',
     description:
-      'Wabah zombie menyerang sekolah dan memaksa siswa bertahan hidup. An intense survival story full of tension.',
-    image: '/all-of-us-are-dead.jpg',
-    color: 'from-lime-400 via-green-400 to-emerald-300',
+      'Lagu tentang kenangan dan cinta yang tetap hidup meski terpisah jarak.',
+    image: '/ed.jpg',
+    color: 'from-blue-300 via-indigo-400 to-purple-400',
   },
   {
-    title: '🦁 Mufasa: The Lion King',
+    title: '🌙 Somebody’s Pleasure – Aziz Hedra',
     description:
-      'Perjalanan Mufasa dari awal hingga menjadi raja yang kuat. A powerful story of courage and destiny.',
-    image: '/Mufasa.jpg',
-    color: 'from-yellow-300 via-amber-300 to-orange-400',
+      'Perasaan kosong dan kehilangan arah dalam hidup.',
+    image: '/aziz.jpg',
+    color: 'from-indigo-500 via-purple-500 to-slate-700',
   },
   {
-    title: '👻 Annabelle',
+    title: '🌇 Bersenja Gurau – Raim Laode',
     description:
-      'Boneka misterius yang membawa teror ke dalam rumah. A chilling horror experience.',
-    image: '/Annabelle.jpg',
-    color: 'from-red-500 via-red-600 to-pink-500',
+      'Momen hangat dan sederhana bersama orang tersayang.',
+    image: '/raim.jpg',
+    color: 'from-orange-300 via-pink-400 to-rose-400',
   },
   {
-    title: '🧠 Inside Out 2',
+    title: '🏙️ Kota Ini Tak Sama Tanpamu – Nadhif Basmalah',
     description:
-      'Petualangan emosi baru dalam pikiran Riley. A colorful journey of feelings and growth.',
-    image: '/inside-out.jpg',
-    color: 'from-blue-300 via-pink-300 to-yellow-200',
+      'Kehilangan yang membuat semuanya terasa berbeda.',
+    image: '/nadhif.jpg',
+    color: 'from-gray-400 via-slate-500 to-gray-700',
   },
   {
-    title: '🌊 Moana 2',
+    title: '🎯 Risk It All – Bruno Mars',
     description:
-      'Moana kembali berlayar menjelajahi lautan. A brave adventure across the ocean.',
-    image: '/moana.jpg',
-    color: 'from-cyan-300 via-blue-400 to-indigo-400',
+      'Keberanian mengambil risiko demi cinta.',
+    image: '/bruno.jpg',
+    color: 'from-red-500 via-orange-500 to-yellow-400',
   },
   {
-    title: '👹 Pengabdi Setan',
+    title: '🌹 Cinta Luar Biasa – Andmesh Kamaleng',
     description:
-      'Teror keluarga dengan misteri kelam yang menghantui. One of Indonesia’s scariest horror films.',
-    image: '/pengabdi-setan.jpg',
-    color: 'from-red-500 via-pink-500 to-purple-500',
+      'Cinta tulus yang sederhana namun dalam.',
+    image: '/andmesh.jpg',
+    color: 'from-pink-400 via-rose-400 to-red-500',
   },
 ];
 
 export default function ProjectsSection() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
-    align: 'start',
-    dragFree: true,
+    align: 'center',
   });
 
   const scrollPrev = useCallback(() => {
@@ -75,7 +74,7 @@ export default function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="py-20 bg-gradient-to-b from-slate-900 via-indigo-900 to-slate-900 overflow-hidden"
+      className="py-20 bg-yellow-300 overflow-hidden"
     >
       <div className="container mx-auto px-4">
 
@@ -86,7 +85,7 @@ export default function ProjectsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-white">
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900">
             My Ultimate Watch 🍿
           </h2>
         </motion.div>
@@ -101,43 +100,29 @@ export default function ProjectsSection() {
                   key={index}
                   className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.33%]"
                 >
-                  <div className="p-5 rounded-2xl bg-white/5 backdrop-blur-xl hover:-translate-y-3 transition-all duration-500">
+                  <div className="p-5 rounded-2xl bg-white/60 backdrop-blur-md hover:-translate-y-3 transition-all duration-500">
 
                     <div className="relative group">
 
-                      {/* OUTER GLOW */}
+                      {/* GLOW */}
                       <div
                         className={`absolute inset-0 rounded-xl bg-gradient-to-r ${project.color}
-                        blur-3xl opacity-50 group-hover:opacity-100 
-                        scale-90 group-hover:scale-110 
-                        transition duration-500`}
-                      />
-
-                      {/* LIGHT BURST */}
-                      <div
-                        className={`absolute inset-0 rounded-xl bg-gradient-to-r ${project.color}
-                        blur-2xl opacity-0 group-hover:opacity-80 
-                        animate-pulse`}
+                        blur-3xl opacity-40 group-hover:opacity-100 
+                        scale-90 group-hover:scale-110 transition duration-500`}
                       />
 
                       {/* BORDER */}
                       <div
-                        className={`relative p-[3px] rounded-xl bg-gradient-to-r ${project.color}
-                        shadow-[0_0_40px_rgba(255,255,255,0.3)]
-                        group-hover:shadow-[0_0_80px_rgba(255,255,255,0.9)]
-                        transition duration-500`}
+                        className={`relative p-[3px] rounded-xl bg-gradient-to-r ${project.color}`}
                       >
 
                         {/* IMAGE */}
-                        <div className="aspect-[2/3] w-full rounded-xl overflow-hidden bg-black border border-white/10">
+                        <div className="aspect-[2/3] w-full rounded-xl overflow-hidden bg-black flex items-center justify-center">
                           <img
                             src={project.image}
                             alt={project.title}
-                            className="w-full h-full object-cover object-top 
-                            group-hover:scale-110 
-                            group-hover:brightness-110 
-                            group-hover:saturate-150 
-                            transition duration-500"
+                            className="w-full h-full object-cover object-center scale-105
+                            group-hover:scale-110 transition duration-500"
                           />
                         </div>
 
@@ -145,12 +130,12 @@ export default function ProjectsSection() {
                     </div>
 
                     {/* TITLE */}
-                    <h3 className="font-bold text-lg mt-4 text-white">
+                    <h3 className="font-bold text-lg mt-4 text-gray-900">
                       {project.title}
                     </h3>
 
                     {/* DESC */}
-                    <p className="text-sm text-white/70 mt-2">
+                    <p className="text-sm text-gray-800 mt-2">
                       {project.description}
                     </p>
 
@@ -161,7 +146,7 @@ export default function ProjectsSection() {
             </div>
           </div>
 
-          {/* BUTTON LEFT */}
+          {/* BUTTON */}
           <Button
             onClick={scrollPrev}
             className="absolute left-0 top-1/2 -translate-y-1/2 z-10"
@@ -169,7 +154,6 @@ export default function ProjectsSection() {
             <ChevronLeft />
           </Button>
 
-          {/* BUTTON RIGHT */}
           <Button
             onClick={scrollNext}
             className="absolute right-0 top-1/2 -translate-y-1/2 z-10"
