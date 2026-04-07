@@ -20,13 +20,13 @@ const contactInfo = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'ricarlehardilaa@gmail.com',
+    value: 'bakwannbeku@gmail.com',
     href: 'mailto:ricarlehardilaa@gmail.com',
   },
   {
     icon: Phone,
     label: 'Telepon',
-    value: '+62 812 65074129',
+    value: '+62 85373819128',
     href: 'https://wa.me/6281265074129',
   },
   {
@@ -161,7 +161,7 @@ export default function ContactSection() {
               <label className="text-white/70 text-sm ml-1">Name</label>
               <Input
                 name="name"
-                placeholder="Your Name ✨"
+                placeholder="Nama kamu ✨"
                 value={formData.name}
                 onChange={handleChange}
                 className={`bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-cyan-400 transition-all ${errors.name ? 'border-red-500' : ''}`}
@@ -174,7 +174,7 @@ export default function ContactSection() {
               <Input
                 name="email"
                 type="email"
-                placeholder="your@email.com 📩"
+                placeholder="@email.com 📩"
                 value={formData.email}
                 onChange={handleChange}
                 className={`bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-cyan-400 transition-all ${errors.email ? 'border-red-500' : ''}`}
@@ -198,7 +198,7 @@ export default function ContactSection() {
               <label className="text-white/70 text-sm ml-1">Message</label>
               <Textarea
                 name="message"
-                placeholder="Write your message... 🚀"
+                placeholder="your message... 🚀"
                 value={formData.message}
                 onChange={handleChange}
                 className={`bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-cyan-400 transition-all min-h-[150px] ${errors.message ? 'border-red-500' : ''}`}
