@@ -20,7 +20,7 @@ export default function Navbar({ isDark, toggleTheme }) {
     { label: 'Kenalan Lebih Dekat⚡', href: '#about' },
     { label: 'Skill Akademik🔥', href: '#skills' },
     { label: 'Soundtrack Hidup🎧', href: '#projects' },
-    { label: 'Get in Touch', href: 'https://wa.me/6281265074129' },
+    { label: 'Get in Touch', href: 'https://wa.me/6285373819128' },
   ];
 
   const scrollToSection = (href) => {
