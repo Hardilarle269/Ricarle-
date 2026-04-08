@@ -23,7 +23,7 @@ const projects = [
     title: '🌇 Bersenja Gurau – Raim Laode',
     description:
       'Momen hangat dan sederhana bersama orang tersayang.',
-    image: '/raim.jpg',
+    image: '/raim.jpeg',
     color: 'from-orange-300 via-pink-400 to-rose-400',
   },
   {
