@@ -16,10 +16,10 @@ export default function Navbar({ isDark, toggleTheme }) {
   }, []);
 
   const navItems = [
-    { label: 'Home', href: '#home' },
-    { label: 'Kenalan Lebih Dekat⚡', href: '#about' },
-    { label: 'Skill Akademik🔥', href: '#skills' },
-    { label: 'Soundtrack Hidup🎧', href: '#projects' },
+    { label: 'Beranda', href: '#home' },
+    { label: 'Get to know me⚡', href: '#about' },
+    { label: 'Academic Skills🔥', href: '#skills' },
+    { label: 'favorite songs🎵', href: '#projects' },
     { label: 'Get in Touch', href: 'https://wa.me/6285373819128' },
   ];
 
