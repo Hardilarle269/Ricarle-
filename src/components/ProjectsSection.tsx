@@ -86,7 +86,7 @@ export default function ProjectsSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900">
-            My Ultimate Watch 🍿
+            Soundtrack Hidup🎵
           </h2>
         </motion.div>
 
